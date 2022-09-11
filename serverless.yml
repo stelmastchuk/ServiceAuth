@@ -1,0 +1,32 @@
+service:
+  name: "authorizer"
+
+plugins:
+  - serverless-offline
+  - serverless-webpack
+
+custom:
+  webpack:
+      webpackConfig: ./webpack.config.js
+      includeModules: true
+  package:
+  individually: true  
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  timeout: 30
+  region: us-east-2
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - secretsmanager:GetSecretValue
+      Resource: "*" 
+      
+
+functions:
+  authorizerFunc:
+    handler: src/handler.handler
+ 
+                        
+
